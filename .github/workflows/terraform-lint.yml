@@ -1,0 +1,42 @@
+name: Terraform Lint and Validate
+
+# Trigger the workflow only on Pull Requests targeting the main branch
+# and only when Terraform files are modified.
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - '**/*.tf'
+      - '**/*.tfvars'
+
+jobs:
+  terraform-checks:
+    name: Format and Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Sets up the Terraform CLI in the GitHub Actions runner
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      # 1. Format Check: Fails if files are not formatted correctly.
+      # The '-recursive' flag checks all subdirectories.
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check -recursive
+
+      # 2. Init: Required before validation to download providers.
+      # '-backend=false' saves time by not initializing remote state (like S3/GCS).
+      - name: Terraform Init
+        id: init
+        run: terraform init -backend=false
+
+      # 3. Validate: Checks for syntax errors, missing variables, etc.
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate

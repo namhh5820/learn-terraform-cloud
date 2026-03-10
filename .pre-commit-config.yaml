@@ -11,6 +11,5 @@ repos:
     rev: v1.86.0 # Use the latest version
     hooks:
       - id: terraform_fmt
-      - id: terraform_docs # Automatically updates your README with variables
       - id: terraform_tflint
       - id: terraform_checkov # Scans for security misconfigurations

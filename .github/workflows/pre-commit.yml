@@ -15,6 +15,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      # FIX: Install Checkov via pip so the pre-commit hook can find it
+      - name: Install Checkov
+        run: pip install checkov
+        
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 

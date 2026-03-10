@@ -13,3 +13,9 @@ repos:
       - id: terraform_fmt
       - id: terraform_tflint
       - id: terraform_checkov # Scans for security misconfigurations
+
+  # --- 2. Prevent Secret Leakage (The "Big One") ---
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks

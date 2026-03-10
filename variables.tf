@@ -13,3 +13,9 @@ variable "instance_name" {
   default     = "Provisioned by Terraform"
 }
 
+variable "instance_pw" {
+  description = "EC2 instance pw"
+  default     = "abc@123"
+  type  = string
+}
+
